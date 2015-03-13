@@ -263,8 +263,6 @@ $ flynn log flynn-aff3ae71d0c149b185ec64ea2885075f
 
 ## 运行
 
-An interactive one-off process may be spawned in a container:
-
 可以在容器中创建一个交互的一次性的进程：
 
 ```
