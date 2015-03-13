@@ -3,6 +3,8 @@
 [Flynn](https://flynn.io) is a next generation open source Platform as a Service
 (PaaS).
 
+[Flynn](https://flynn.io) 是下一代的开源 PaaS 平台。
+
 Unlike most PaaS's, Flynn can run stateful services as well as [twelve-factor
 ](http://12factor.net/) apps. This includes built-in database appliances (just
 Postgres to start). Flynn is modular so users can easily modify, upgrade, and
