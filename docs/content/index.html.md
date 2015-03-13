@@ -168,7 +168,7 @@ flynn-16f2725f165343fca22a65eebab4e230  web
 flynn-d7893da39a8847f395ce47f024479145  web
 ```
 
-The logs of those processes should show the added log message:
+这些进程的记录应该展示添加的记录信息：
 
 ```
 $ flynn log flynn-cf834b6db8bb4514a34372c8b0020b1e
