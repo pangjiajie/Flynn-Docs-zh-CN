@@ -1,4 +1,4 @@
-# Welcome to Flynn
+# 欢迎使用 Flynn
 
 [Flynn](https://flynn.io) is a next generation open source Platform as a Service
 (PaaS).
