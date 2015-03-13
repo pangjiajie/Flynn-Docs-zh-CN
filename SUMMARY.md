@@ -1,9 +1,9 @@
-# Flynn 中文指南
-
-### 书籍简介
-
-翻译 Flynn Docs，并撰写 Flynn 使用手册。
-
-### 翻译人员
-
-### 翻译进度
+* [使用 Flynn](docs/content/index.html.md)
+* [架构](docs/content/architecture.html.md)
+* [如何](docs/content/installation.html.md)
+ - [部署Go](docs/content/how-to-deploy-go.html.md)
+ - [部署Java](docs/content/how-to-deploy-java.html.md)
+ - [部署Node.js](docs/content/how-to-deploy-nodejs.html.md)
+ - [部署PHP](docs/content/how-to-deploy-php.html.md)
+ - [部署Python](docs/content/how-to-deploy-python.html.md)
+ - [部署Ruby](docs/content/how-to-deploy-ruby.html.md)
