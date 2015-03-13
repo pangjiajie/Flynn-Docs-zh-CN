@@ -150,7 +150,7 @@ Listening on 55006
 console.log("I've made a change!")
 ```
 
-提交到 Git，push 修改到 Flynn：
+提交到 Git，push 变更至 Flynn：
 
 ```
 $ git add web.js
