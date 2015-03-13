@@ -158,7 +158,6 @@ $ git commit -m "Add log message"
 $ git push flynn master
 ```
 
-Once that push has succeeded, you should now see 3 new processes:
 一旦 push 成功，你将看到3个新进程：
 
 ```
