@@ -10,6 +10,9 @@ Unlike most PaaS's, Flynn can run stateful services as well as [twelve-factor
 Postgres to start). Flynn is modular so users can easily modify, upgrade, and
 replace components.
 
+不同于大多数PaaS， Flynn 既可以运行 twelve－factor 应用，又可以运行状态服务。
+Flynn 包括内置数据库应用（目前仅有 Postgres 一种）。Flynn 是一种模块，用户可以方便的定制、升级以及替换组件。
+
 Flynn components are divided into two _layers_.
 
 **Layer 0** is a low-level resource framework inspired by the [Google
