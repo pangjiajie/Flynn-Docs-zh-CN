@@ -209,8 +209,7 @@ Hello from Flynn on port 55007 from container cf834b6db8bb4514a34372c8b0020b1e
 
 ## 多进程
 
-So far the example application has only had one process type (i.e. the `web` process),
-but applications can have multiple process types which can be scaled individuallly.
+目前示例应用只有一个进程类型 (即 `web` 进程)，但应用可以拥有多个进程类型，并且独立扩展。
 
 Lets add a simple `clock` service which will print the time every second.
 
