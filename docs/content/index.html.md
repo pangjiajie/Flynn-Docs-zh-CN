@@ -221,13 +221,13 @@ setInterval(function() {
 }, 1000);
 ```
 
-Create the `clock` process type by adding the following to `Procfile`:
+通过将如下代码添加至 `Procfile` 来创建 `clock` 进程类型：
 
 ```
 clock: node clock.js
 ```
 
-Release these changes:
+发布这些改动：
 
 ```
 $ git add clock.js Procfile
@@ -235,7 +235,7 @@ $ git commit -m "Add clock service"
 $ git push flynn master
 ```
 
-Scale the `clock` service to one process and get its output:
+扩展 `clock` 服务至一个进程并显示：
 
 ```
 $ flynn scale clock=1
