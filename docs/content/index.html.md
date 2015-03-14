@@ -213,7 +213,7 @@ Hello from Flynn on port 55007 from container cf834b6db8bb4514a34372c8b0020b1e
 
 我们添加一个简单的 `clock` 服务来打印每秒的时间。
 
-Add the following to `clock.js`:
+将如下代码加入 `clock.js`：
 
 ```js
 setInterval(function() {
