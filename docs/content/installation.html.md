@@ -19,15 +19,14 @@ L=/usr/local/bin/flynn && curl -sL -A "`uname -sp`" https://cli.flynn.io/flynn.g
 
 ## Vagrant
 
-### Dependencies
+### 依赖
 
-Both Vagrant and VirtualBox need to be installed, so if you don't have them already you should
-install them by following the directions on their respective web sites:
+需要安装 Vagrant 和 VirtualBox，如果没有，请参照其网站上的指南安装：
 
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant 1.6 or greater](http://www.vagrantup.com/)
 
-### Installation
+### 安装
 
 Clone the Flynn git repository:
 
