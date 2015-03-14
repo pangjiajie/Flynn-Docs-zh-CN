@@ -178,21 +178,18 @@ Listening on 55007
 
 ## Routes
 
-On creation, applications get a default route which is a subdomain of the default
-route domain (e.g. `example.demo.localflynn.com`). If you want to use a different
-domain, you will need to add another route.
+初始创建后，应用会获得一个默认路由，它是根域名的子域名 (e.g. `example.demo.localflynn.com`)。如果你想使用其他域名，你需要添加其他路由。
 
-Let's say you have a domain `example.com` which is pointed at your Flynn cluster
-(e.g. it is a `CNAME` for `example.demo.localflynn.com`).
+假如你有一个名为 `example.com` 的域名，它指向你的 Flynn 集群 (e.g. it is a `CNAME` for `example.demo.localflynn.com`).
 
-Add a route for that domain:
+为该域名添加路由：
 
 ```
 $ flynn route add http example.com
 http/5ababd603b22780302dd8d83498e5172
 ```
 
-You should now have two routes for your application:
+你的应用现在应当有两条路由记录：
 
 ```
 $ flynn route
@@ -201,17 +198,16 @@ http:example.com                  example-web  http/5ababd603b22780302dd8d83498e
 http:example.demo.localflynn.com  example-web  http/1ba949d1654e711d03b5f1e471426512
 ```
 
-HTTP requests to `example.com` should be routed to the web processes:
+指向 `example.com` 的 HTTP 请求应当被路由指向到 web 进程：
 
 ```
 $ curl http://example.com
 Hello from Flynn on port 55007 from container cf834b6db8bb4514a34372c8b0020b1e
 ```
 
-You could now modify your application to respond differently based on the HTTP Host
-header (which here could be either `example.demo.localflynn.com` or `example.com`).
+你现在可以修改你的应用来响应不同的 HTTP Host header  (即可以是 `example.demo.localflynn.com` 也可以是 `example.com`).
 
-## Multiple Processes
+## 多进程
 
 So far the example application has only had one process type (i.e. the `web` process),
 but applications can have multiple process types which can be scaled individuallly.
