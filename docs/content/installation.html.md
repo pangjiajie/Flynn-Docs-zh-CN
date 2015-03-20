@@ -159,6 +159,8 @@ $ sudo flynn-host init --discovery https://discovery.etcd.io/ac4581ec13a1d4baee9
 **Note:** a new token must be used every time you restart all nodes in the
 cluster.
 
+**Note:** 每次你重启集群中的所有节点时，你必须使用一个新的 token。
+
 Then, start the daemon by running:
 
 ```
