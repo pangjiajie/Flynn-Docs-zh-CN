@@ -4,21 +4,29 @@ layout: docs
 ---
 
 ## Flynn Architecture
+## Flynn 结构
 
 The Flynn architecture is designed to be simple and understandable. Most of the
 components of Flynn are no different than the services or applications that are
 deployed on top of Flynn. This is because the primary object in the system is
 the container and nearly everything runs in a container.
+Flynn的结构简单而又容易理解.Flynn的大部分组件和部署在Flynn上的服务与程序并无区别.
+这是因为系统中最基本的对象是容器,几乎所有的(程序)运行在容器内.
 
 For ease of understanding the significance of the components, Flynn is broken
 down into two layers. The first layer contains the minimum components needed to
 run the rest of the components -- a bootstrapping layer. The second is where the
 rest of Flynn lives.
+为了便于理解组件的重要性,Flynn被分解为两层.
+第一层包含运行其他组件所要求的最少组件--引导层.第二层是其他Flynn组件.
 
 *Layer 0*, is the core of Flynn. It assumes hosts and a network environment, and
 doesn't care how they got there -- cloud or hardware. Layer 0 sits on top of
 hosts, abstracting them away and provides primitives for the rest of the system,
 namely distributed container management.
+第0层是Flynn的核心.它定义了主机和网络环境,然而并不关心如何到达,无论是云或是硬件.
+第0层位于主机上方,它抽象出主机,并为系统其他部分提供基元,也就是分布式容器管理器.
+
 
 *Layer 1* is where most of what we consider Flynn to be exists. It's where
 containers become services or applications, and the user workflow is
@@ -26,10 +34,15 @@ implemented. Everything in Layer 1 is ultimately no different than the services
 it helps to deploy. In fact, we've intentionally stopped at Layer 1 as opposed
 to creating a "userland" layer 2 because there would technically be no
 difference.
+第1层是Flynn大部分存在的位置.在这里容器形成服务或程序,用户的工作流得到执行.
+在第1层的任何事物基本都和它将形成的服务没有区别.
+事实上,我们故意停留在第1层而不是创建一个用户层作为第2层,因为在技术上可以说是没有区别的.
 
 At a high level, here are the concerns of each layer, which map to basic
 components. Keep in mind that Layer 1 is based on our MVP requirements, but
 extends into anything else Flynn decides to provide.
+以下是每一层的要点,也对应着所需的基础组件.
+请记住,第1层基于我们的MVP需求,但是可以扩展为Flynn决定提供的任何东西.
 
 #### Layer 0
 
@@ -37,14 +50,26 @@ extends into anything else Flynn decides to provide.
 * Job scheduling
 * Service discovery
 * Host abstraction
+#### 第0层
+
+* 分布的配置/协调
+* 作业调度
+* 服务发现
+* 主机抽象
 
 #### Layer 1
-
 * Management API / client
 * Git receiver
 * Heroku Buildpacks
 * Datastore appliances
 * Routing
+#### 第1层
+
+* 管理API/客户端
+* Git接收器
+* Heroku组建包
+* 数据存储器
+* 路由
 
 ### Layer 0
 
