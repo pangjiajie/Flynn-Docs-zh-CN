@@ -188,7 +188,7 @@ After you have a running Layer 0 cluster, you can now bootstrap Layer 1 with
 `flynn-host bootstrap`. You'll need a domain name with DNS A records pointing to
 every node IP address and a second, wildcard domain CNAME to the cluster domain.
 
-在运行了 Layer 0 集群之后，你可以通过执行 `flynn-host bootstrap` 启动 Layer 1。
+在运行了 Layer 0 集群之后，你可以通过执行 `flynn-host bootstrap` 启动 Layer 1。你需要一个域名和 DNS 的A记录来指向每一个节点的 IP 地址，和一个泛域名 CNMAE 记录指向集群域名。
 
 **Example**
 
