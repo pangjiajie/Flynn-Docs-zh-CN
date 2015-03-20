@@ -131,10 +131,17 @@ using a [discovery
 token](https://coreos.com/docs/cluster-management/setup/etcd-cluster-discovery/).
 `flynn-host init` is a tool that handles generating and configuring the token.
 
+如果你使用了超过一个节点，那么 etcd 集群应该使用 [discovery
+token](https://coreos.com/docs/cluster-management/setup/etcd-cluster-discovery/) 来配置。
+
+`flynn-host init` 是用来产生和配置 token 的工具。
+
 On the first node, create a new token with the `--init-discovery=3` flag,
 replacing `3` with the total number of nodes that will be started. The minimum
 multi-node cluster size is three, and this command does not need to be run if
 you are only starting a single node.
+
+在第一个节点上，生成一个带有 `--init-discovery=3` 的 token，将 `3` 替换成你将启动的节点数目。最小的多节点系统的数量是 3 个。如果仅需一个节点，那么无需使用此 命令。 
 
 ```
 $ sudo flynn-host init --init-discovery=3
@@ -142,6 +149,8 @@ https://discovery.etcd.io/ac4581ec13a1d4baee9f9c78cf06a8c0
 ```
 
 On the rest of the nodes, configure the generated discovery token:
+
+在其余节点处，配置生成的 discovery token：
 
 ```
 $ sudo flynn-host init --discovery https://discovery.etcd.io/ac4581ec13a1d4baee9f9c78cf06a8c0
