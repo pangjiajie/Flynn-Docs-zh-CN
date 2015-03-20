@@ -124,6 +124,8 @@ The next step is to configure a Layer 0 cluster by starting the flynn-host daemo
 nodes. The daemon uses etcd for leader election, and etcd needs to be aware of all of the
 other nodes for it to function correctly.
 
+下一步是在第0层部署集群，通过在所有节点上启动 flynn-host 进程。该进程使用 etcd 来进行主从选举，并且 etcd 需要知晓所有其他节点来使它正确工作。
+
 If you are starting more than one node, the etcd cluster should be configured
 using a [discovery
 token](https://coreos.com/docs/cluster-management/setup/etcd-cluster-discovery/).
