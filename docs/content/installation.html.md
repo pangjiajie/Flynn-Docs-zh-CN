@@ -180,6 +180,8 @@ If the status is `stop/waiting`, the daemon has failed to start for some reason.
 log file (`/var/log/upstart/flynn-host.log`) for any errors and try starting the daemon
 again.
 
+如果状态是 `stop/waiting`，那么进程因某些原因运行失败。。检查 log 文件 (`/var/log/upstart/flynn-host.log`) 来找出错误并尝试重启进程。
+
 ### Start Flynn Layer 1
 
 After you have a running Layer 0 cluster, you can now bootstrap Layer 1 with
