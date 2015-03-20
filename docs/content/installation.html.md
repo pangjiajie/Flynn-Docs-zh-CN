@@ -203,8 +203,12 @@ demo.localflynn.com.    A      192.168.84.44
 records, you can use [xip.io](http://xip.io) which provides wildcard DNS for
 any IP address.*
 
+*如果你只使用单一节点并且不想设置 DNS 记录，你可以使用 [xip.io](http://xip.io) 来给任意 IP 提供泛域 DNS。*
+
 Set `CLUSTER_DOMAIN` to the main domain name and start the bootstrap process,
 specifying the number of hosts that are expected to be present.
+
+设置 `CLUSTER_DOMAIN` 为主域名并启动进程，指出你想要的主机数量。
 
 ```
 $ sudo \
