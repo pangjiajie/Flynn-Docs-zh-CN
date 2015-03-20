@@ -1,0 +1,462 @@
+---
+title: Development
+layout: docs
+---
+
+# Development
+# 开发
+
+This guide will explain how to:
+
+本指南将解释如何：
+
+* Make changes to the Flynn source code
+* 更改Flynn源代码
+* Build and run Flynn
+* 构建和运行Flynn
+* Run the tests
+* 运行测试
+* Create a release of Flynn
+* 创建Flynn的release版本
+
+## Development environment
+## 开发环境
+
+Development work is typically done inside a [VirtualBox](https://www.virtualbox.org/) VM managed
+by [Vagrant](https://www.vagrantup.com/), and Flynn includes a Vagrantfile which fully automates
+the creation of the VM.
+
+开发工作是在Vagrant管理的VirtualBox虚拟机内完成的，并且Flynn包含一个能完全自动创建虚拟机的Vagrant文件
+
+### Running the development VM
+### 运行开发虚拟机
+
+If you don't already have VirtualBox and Vagrant installed, you should
+install them by following the directions on their respective web sites.
+
+如果你没有安装VirtualBox或Vagrant，你应该按照其各自网站的说明来安装他们。
+
+Clone the Flynn source code locally:
+
+克隆Flynn源代码到本地：
+
+```
+$ git clone https://github.com/flynn/flynn.git
+```
+
+Then, inside the `flynn` directory, bring up the VM:
+
+接下来，在`flynn`目录中调出VM：
+
+```
+$ vagrant up
+```
+
+If this is the first time you are creating the VM, Vagrant will need to download the
+underlying VirtualBox files which are ~1GB in size, so this could take a while depending on
+your internet connection.
+
+如果这是第一次创建虚拟机，Vagrant将需要下载大约1GB的VirtualBox底层文件，所以由于你的网络链接状况可能会花费一定时间。
+
+Once that command has finished, you will have a VM running which you can SSH to:
+
+在下面这条命令完成之后，将有一个可以SSH到的虚拟机在运行：
+
+
+
+```
+$ vagrant ssh
+```
+
+From now on, it is assumed that commands will be run inside the VM, unless otherwise stated.
+
+从现在开始，除非另有声明，否则命令都将会在虚拟机中运行。
+
+## Making code changes
+## 修改代码
+
+The development VM is configured to share the Flynn source code from your machine and mount
+it at `/vagrant`, meaning you can edit files locally on your machine and those changes
+will be visible inside the VM.
+
+开发虚拟机被配置为可从你的机器分享Flynn源代码，并将它挂载在`/vagrant`，这意味着你可以在本地计算机编辑文件同时这些变化将在虚拟机内可见。
+
+
+Since Flynn is primarily written in Go, the source code needs to be inside a valid Go workspace.
+The development VM has a `GOPATH` of `$HOME/go` and the Flynn source code is symlinked from
+`/vagrant` to `$GOPATH/src/github.com/flynn/flynn`.
+
+由于Flynn主要是基于Go语言，源代码需要在一个有效的Go工作空间内。开发虚拟机在`$HOME/go`内有一个`GOPATH`文件夹，并且Flynn源代码从`/vagrant`到`$GOPATH/src/github.com/flynn/flynn`被符号链接。
+
+If you don't have a specific issue you are trying to fix, but are interested in contributing
+to the project, you should start by looking at GitHub issues labelled
+[easy](https://github.com/flynn/flynn/labels/easy).
+
+如果你没有一个具体的问题要去解决，但你对促进这个项目感兴趣，你应该从Github上标记为[easy](https://github.com/flynn/flynn/labels/easy)的地方看起。
+
+
+
+## Building Flynn
+## 构建Flynn
+We use the [tup](http://gittup.org/tup/) build system to run the commands which build the various
+components of Flynn.
+
+我们使用[tup](http://gittup.org/tup/)构建系统来运行构成Flynn的各种组件的命令。
+
+To kickoff the build process, just run `make`:
+
+开始构建，只需要运行`make`命令：
+
+```
+$ make
+```
+
+This will do things like build Go binaries and create Docker images. If you're interested in
+exactly what will be built, take a look at the `Tupfiles` in various subdirectories.
+
+所做的事情就像构建Go的二进制文件和创建Docker镜像。如果你对究竟会构建出什么感兴趣，可以查看各个子目录中的`Tuofile`文件夹。
+
+If any build command fails, `tup` will output an error and abort the entire build. You can then
+fix the issue and then re-run `make`.
+
+如果任何构建命令失败了，`tup`将输出一个错误并终止整个构建。你可以解决问题后再重新执行`make`命令。
+
+If you want to rebuild all Go binaries, run `make clean`.
+
+如果你想要重新构建整个Go二进制文件，运行`make clean`命令。
+
+Once tup runs successfully, you will have a number of built Go binaries and Docker images which
+can be used to run Flynn.
+
+一旦tup运行成功，你将会有一批可以用来运行Flynn的已构建的Go二进制文件和Docker镜像。
+
+## Running Flynn
+## 运行Flynn
+
+Once you have built all the Flynn components, you can boot a single node Flynn cluster by running
+the following script:
+
+一旦你构建好了所有Flynn组件，你就可以通过运行以下脚本来启动一个单节点Flynn集群。
+
+
+```
+$ script/bootstrap-flynn
+```
+
+This will do the following:
+
+它将会进行以下操作：
+
+* stop the `flynn-host` daemon and any running Flynn services
+* 停止`flynn-host`守护进程和所有正在运行的Flynn服务（有待讨论）
+* start the `flynn-host` daemon, which will in turn start etcd and discoverd
+* 运行`flynn-host`守护进程，这将反过来启动etcd和discoverd（有待讨论）
+* run the Flynn bootstrapper, which will start all the Flynn Layer 1 services
+* 运行Flynn引导程序，这将启动Flynn中所有Layer1的服务
+
+If you want to boot Flynn using a different job backend, or an external IP other
+than that of the `eth0` device, the script provides some options for doing so.
+See `script/bootstrap-flynn -h` for a full list of supported options.
+
+如果你想使用一个不同的工作后台启动Flynn，或者是`eth0`设备以外的一个外部IP，该脚本提供为这些操作提供了一些选项。可在`script/bootstrap-flynn -h`查看完整的支持选项的列表。
+
+
+Once Flynn is running, you can add the cluster to the `flynn` CLI tool using the
+bootstrap output, and then try out your changes (e.g. by following [this guide]
+(https://github.com/flynn/flynn#trying-it-out)).
+
+一旦Flynn运行，你可以通过引导输出添加集群到`flynn`CLI 工具，然后试用你的更改。(e.g. 按照以下链接做[this guide](https://github.com/flynn/flynn#trying-it-out))
+
+## Debugging
+## 调试
+If things don't seem to be running as expected, here are some useful commands to help
+diagnose the issue:
+
+如果事情没有按预期的方向运行，这里有一些有用的命令可以帮助诊断这些问题：
+
+### check the flynn-host daemon log
+### 检查flynn主机的守护进程日志
+```
+$ less /tmp/flynn-host.log
+```
+
+### view running jobs
+### 查看正在运行的工作
+
+```
+$ flynn-host ps
+ID                                                      STATE    STARTED             CONTROLLER APP  CONTROLLER TYPE
+flynn-66f3ca0c60374a1abb172e3a73b50e21                  running  About a minute ago  example         web
+flynn-9d716860f69f4f63bfb4074bcc7f4419                  running  4 minutes ago       gitreceive      app
+flynn-7eff6d37af3c4d909565ca0ab3b077ad                  running  4 minutes ago       router          app
+flynn-b8f3ecd48bb343dab96744a17c96b95d                  running  4 minutes ago       blobstore       web
+...
+```
+
+### view all jobs (i.e. running + stopped)
+### 查看所有工作（正在运行的和已经停止的）
+
+```
+$ flynn-host ps -a
+ID                                                      STATE    STARTED             CONTROLLER APP  CONTROLLER TYPE
+flynn-7fd8c48542e442349c0217e7cb52dec9                  running  15 seconds ago      example         web
+flynn-66f3ca0c60374a1abb172e3a73b50e21                  running  About a minute ago  example         web
+flynn-9868a539703145a1886bc2557f6f6441                  done     2 minutes ago       example         web
+flynn-100f36e9d18849658e11188a8b85e79f                  done     3 minutes ago       example         web
+flynn-f737b5ece2694f81b3d5efdc2cb8dc56                  done     4 minutes ago
+flynn-9d716860f69f4f63bfb4074bcc7f4419                  running  5 minutes ago       gitreceive      app
+flynn-7eff6d37af3c4d909565ca0ab3b077ad                  running  5 minutes ago       router          app
+flynn-b8f3ecd48bb343dab96744a17c96b95d                  running  5 minutes ago       blobstore       web
+...
+```
+
+### view the output of a job
+### 查看各个工作的输出
+
+```
+$ flynn-host log $JOBID
+Listening on 55006
+```
+
+### inspect a job
+### 检查各个工作
+
+```
+$ flynn-host inspect $JOBID
+ID                           flynn-075c21e8b79a41d89713352f04f94a71
+Status                       running
+StartedAt                    2014-10-14 14:34:11.726864147 +0000 UTC
+EndedAt                      0001-01-01 00:00:00 +0000 UTC
+ExitStatus                   0
+IP Address                   192.168.200.24
+flynn-controller.release     954b7ee40ef24a1798807499d5eb8297
+flynn-controller.type        web
+flynn-controller.app         e568286366d443c49dc18e7a99f40fc1
+flynn-controller.app_name    example
+```
+
+### stop a job
+### 暂停一个工作
+
+```
+$ flynn-host stop $JOBID
+```
+
+### stop all jobs
+### 暂停所有工作
+
+```
+$ flynn-host ps -a | xargs flynn-host stop
+```
+
+*(NOTE: as jobs are stopped, the scheduler may start new jobs. To avoid this, stop the scehduler first)*
+
+### stop all jobs for a particular app
+### 为某个特定的应用暂停所有工作
+
+Assuming the app has name `example`:
+
+假设这个应用为`example`:
+
+```
+$ flynn-host ps | awk -F " {2,}" '$4=="example" {print $1}' | xargs flynn-host stop
+```
+
+### upload logs and system information to a gist
+### 上传日志和系统信息到要点
+
+If you want to get help diagnosing issues on your system, run the following to upload some
+useful information to an anonymous gist:
+
+如果你想在诊断系统问题上获得一些帮助，运行以下命令来上床一些有用的信息到匿名要点：
+
+```
+$ flynn-host upload-debug-info
+14:45:55.596680 upload-debug-info.go:69: Debug information uploaded to: https://gist.github.com/877117544439b0acaf0e
+```
+
+You can then post the gist in the `#flynn` IRC room when asking for assistance to make it easier for
+someone to help you.
+
+接下来当你想要需求帮助的时候，你可以将要点发送到`#flynn`IRC聊天室，这样可以让别人更容易帮你解决这个问题。
+
+## Running tests
+## 运行测试
+Flynn has two types of tests:
+
+Flynn有两种类型的测试
+
+* "unit" tests which are run using `go test`
+*  使用`go test`进行的"单元"测试
+* "interation" tests which run against a booted Flynn
+ cluster
+* 与已启动的Flynn集群相冲突的"集成"测试
+
+### Run the unit tests
+### 运行单元测试
+To run all the unit tests:
+
+对所有单元进行测试:
+
+
+```
+$ go test ./...
+```
+
+To run tests for an individual component (e.g. the router):
+
+对某个独立的组件进行测试(例如路由器)：
+
+```
+$ go test ./router
+```
+
+To run tests for a component and all sub-components (e.g. the controller):
+
+对某个组件及其所有子组件进行测试(例如控制器):
+
+```
+$ go test ./controller/...
+```
+
+### Run the integration tests
+### 运行集成测试
+
+The integration tests live in the `tests` directory, and require a running Flynn
+cluster before they can run.
+
+集成测试位于`tests`目录，并且需要有一个正在运行的Flynn集群才能进行测试
+
+To run all the integration tests:
+
+运行所有的集成测试:
+
+```
+$ script/run-integration-tests
+```
+
+This will:
+
+包括以下内容:
+
+* Run `make` to build Flynn
+* 运行`make`构建Flynn
+* Boot a single node Flynn cluster by running `script/bootstrap-flynn`
+* 通过运行`script/bootstrap-flynn`来引导一个单节点Flynn集群
+* Run the integration test binary (i.e. `bin/flynn-test`)
+* 运行集成测试二进制文件（例如 `bin/flynn-test`）
+ 
+To run an individual integration test (e.g. `TestEnvDir`):
+
+运行某个独立的集成测试(例如`TestEnvDir`):
+
+```
+$ script/run-integration-tests -f TestEnvDir
+```
+
+## Pull request
+## Pull request
+
+Once you have made changes to the Flynn source code and tested your changes, you
+should open a pull request on GitHub so we can review your changes and merge
+them into the Flynn repository.
+
+在你修改Flynn源代码并测试后，你应该在GitHub上发起一个pull request，这样我们能查看你做的更改并把他们整合到Flynn版本库。
+
+Please see the [contribution guide](/docs/contributing) for more information.
+
+详情请查看[contribution guide](/docs/contributing)
+
+## Releasing Flynn
+## 发布Flynn
+Once you have built and tested Flynn inside the development VM, you can create a release
+and install the components on other hosts (e.g. in EC2).
+
+一旦你在开发虚拟机中构建并测试好了Flynn，你可以创建一个release版本并在别的主机上安装其组件（例如EC2）。
+
+A Flynn release is a set of components consisting of binaries, configuration files and
+filesystem images, all of which must be installed in order to run Flynn.
+
+一个Flynn的发布版本是由二进制文件、配置文件和文件系统镜像组成的一系列组件，为了运行Flynn，必须安装所有组件。
+
+### The Update Framework (TUF)
+### 框架升级
+Flynn uses [The Update Framework](http://theupdateframework.com/) (also known as TUF) to
+securely distribute all of the Flynn components.
+
+Flynn使用[The Update Framework](http://theupdateframework.com/)（也叫TUF）来安全分发所有Flynn组件。
+
+To release Flynn, you will need to generate a TUF repository using the
+[go-tuf](https://github.com/flynn/go-tuf) library.
+
+要发布Flynn，你需要使用[go-tuf](https://github.com/flynn/go-tuf)库来生成一个TUF版本库。
+
+Follow the [installation instructions](https://github.com/flynn/go-tuf#install)
+and then follow the ["Create signed root manifest"](https://github.com/flynn/go-tuf#examples)
+example. You should now have a directory with the following layout:
+
+按照[installation instructions](https://github.com/flynn/go-tuf#install)操作之后再参照["Create signed root manifest"](https://github.com/flynn/go-tuf#examples)的例子。你应该拥有了一个如下布局的目录。
+
+
+```
+.
+├── keys
+│   ├── snapshot.json
+│   ├── targets.json
+│   └── timestamp.json
+├── repository
+└── staged
+    ├── root.json
+    └── targets
+```
+
+The TUF root keys need to be compiled into the Flynn release, and image URLs must
+be relative to the file server the TUF repository will be uploaded to. This can be
+accomplished by setting `CONFIG_TUF_ROOT_KEYS` and `CONFIG_IMAGE_REPOSITORY` in
+the `tup.config` file then re-running `make`, e.g.:
+
+TUF的root keys需要被编译成Flynn发布版本，并且镜像URL必须与TUF版本库上传到的文件服务器相关。这些可以通过在`tup.config`中设置`CONFIG_TUF_ROOT_KEYS` 和 `CONFIG_IMAGE_REPOSITORY`然后重新运行`make`来实现，例如：
+
+```
+CONFIG_IMAGE_REPOSITORY=https://s3.amazonaws.com/my-flynn-repo/tuf
+CONFIG_TUF_ROOT_KEYS=[{"keytype":"ed25519","keyval":{"public":"31351ecc833417968faabf98e004d1ef48ecfd996f971aeed399a7dc735d2c8c"}}]
+```
+
+*The TUF root keys can be determined by running `tuf root-keys` in the TUF repository.*
+
+*TUF root keys可以通过运行TUF版本库中的`tuf root-keys`来确定。*
+### Export components
+### 导出组件
+Export the Flynn components into the TUF repository (this will prompt for TUF key
+passphrases):
+
+导出Flynn组件到TUF版本库（将会出现TUF key 密码短语的提示 ）
+
+```
+$ script/export-components /path/to/tuf-repo
+```
+
+### Upload components
+### 上传组件
+Upload the `repository` directory of the TUF repo to the file server referenced
+by `CONFIG_IMAGE_REPOSITORY`.
+
+上传TUF报告的`repository`目录到`CONFIG_IMAGE_REPOSITORY`关联的文件服务器
+
+For example, if using S3 and `CONFIG_IMAGE_REPOSITORY` is set to
+`https://s3.amazonaws.com/my-flynn-repo/tuf`, use `s3cmd` to sync the files:
+
+例如，如果使用S3并且`CONFIG_IMAGE_REPOSITORY`设置为`https://s3.amazonaws.com/my-flynn-repo/tuf`，使用`s3cmd`来同步文件：
+
+```
+$ s3cmd sync --acl-public /path/to/tuf-repo/repository s3://my-flynn-repo/tuf
+```
+
+You can now distribute `script/install-flynn` and run it with an explicit repo URL
+to install the custom built Flynn components:
+
+现在你可以发布`script/install-flynn`并用一个明确的URL运行它来安装默认的构建好的Flynn组件。
+
+```
+install-flynn -r https://s3.amazonaws.com/my-flynn-repo
+```
