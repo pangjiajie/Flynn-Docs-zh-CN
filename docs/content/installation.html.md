@@ -230,3 +230,5 @@ request.
 
 Now you have Flynn installed and running, head over to the [Using Flynn](/docs)
 page for guides on deploying your applications to Flynn.
+
+现在你成功安装了 Flynn 并运行了起来，转至 [Using Flynn](/docs) 页面查看部署应用的教程。
