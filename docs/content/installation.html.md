@@ -162,12 +162,14 @@ cluster.
 **Note:** 每次你重启集群中的所有节点时，你必须使用一个新的 token。
 
 Then, start the daemon by running:
+接着，开启进程：
 
 ```
 $ sudo start flynn-host
 ```
 
 You can check the status of the daemon by running:
+你可以检查进程的状态：
 
 ```
 $ sudo status flynn-host
