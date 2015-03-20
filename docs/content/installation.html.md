@@ -219,6 +219,8 @@ $ sudo \
 *Note: You only need to run this on a single node in the cluster. It will
 schedule jobs on nodes across the cluster as required.*
 
+*你只需要在一个单一节点运行此命令。它会自动安排集群中节点间的任务。*
+
 The Layer 1 bootstrapper will get all necessary services running using the Layer
 0 API. The final log line will contain configuration that may be used with the
 [command-line interface](/docs/cli).
