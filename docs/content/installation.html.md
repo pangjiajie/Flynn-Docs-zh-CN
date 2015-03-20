@@ -225,6 +225,8 @@ The Layer 1 bootstrapper will get all necessary services running using the Layer
 0 API. The final log line will contain configuration that may be used with the
 [command-line interface](/docs/cli).
 
+Layer 1 的启动器能够获得所有必要的服务运行在 Layer 0 的 API 上。log 的最后一行包含了 [command-line interface](/docs/cli) 用到的配置。
+
 If you try these instructions and run into issues, please open an issue or pull
 request.
 
