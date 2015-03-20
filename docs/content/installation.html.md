@@ -228,6 +228,8 @@ The Layer 1 bootstrapper will get all necessary services running using the Layer
 If you try these instructions and run into issues, please open an issue or pull
 request.
 
+如果你尝试了这些步骤却遇到问题，那么你可以在 Github 上提出 pull request。
+
 Now you have Flynn installed and running, head over to the [Using Flynn](/docs)
 page for guides on deploying your applications to Flynn.
 
