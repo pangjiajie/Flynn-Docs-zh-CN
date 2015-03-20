@@ -441,7 +441,7 @@ $ script/export-components /path/to/tuf-repo
 Upload the `repository` directory of the TUF repo to the file server referenced
 by `CONFIG_IMAGE_REPOSITORY`.
 
-上传TUF报告的`repository`目录到`CONFIG_IMAGE_REPOSITORY`关联的文件服务器
+上传TUF版本库的`repository`目录到`CONFIG_IMAGE_REPOSITORY`关联的文件服务器
 
 For example, if using S3 and `CONFIG_IMAGE_REPOSITORY` is set to
 `https://s3.amazonaws.com/my-flynn-repo/tuf`, use `s3cmd` to sync the files:
@@ -455,7 +455,7 @@ $ s3cmd sync --acl-public /path/to/tuf-repo/repository s3://my-flynn-repo/tuf
 You can now distribute `script/install-flynn` and run it with an explicit repo URL
 to install the custom built Flynn components:
 
-现在你可以发布`script/install-flynn`并用一个明确的URL运行它来安装默认的构建好的Flynn组件。
+现在你可以发布`script/install-flynn`并用一个明确的版本库URL运行它来安装默认的构建好的Flynn组件。
 
 ```
 install-flynn -r https://s3.amazonaws.com/my-flynn-repo
